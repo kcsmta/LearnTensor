@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+import numpy as np
 row_dim = 5
 col_dim = 5
 
@@ -42,9 +42,29 @@ crop_tf = tf.random_crop(random_uniform_tf, crop_size)
 
 # 
 my_var = tf.Variable(tf.zeros([row_dim, col_dim]))
+sess = tf.Session()
+init_op = tf.global_variables_initializer()
+sess.run(init_op)
 
 #---------------------------------------------------
 # Using Placeholders and Variables
 # Placeholders and variables are key tools for using computational graphs in TensorFlow
+x = tf.placeholder(tf.float32, shape = [2,2])
+y = tf.identity(x)
+x_vals = np.random.rand(2,2)
+sess = tf.Session()
+feed_dict_op = {
+	x:x_vals
+}
 
-print zero_tf
+# print sess.run(y, feed_dict=feed_dict_op)
+
+x = tf.Variable(np.random.rand(2,2))
+y = tf.identity(x)
+init_op = tf.global_variables_initializer()
+# print y
+
+def my_operation(value):
+	return tf.add(tf.pow(value,2),3)
+
+print (sess.run(my_operation(5)))
